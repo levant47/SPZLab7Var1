@@ -33,5 +33,7 @@ namespace SPZLab7Var1.Utilities
         public static T GetRandomElement<T>(this List<T> source) => source[new Random().Next(0, source.Count())];
 
         public static IEnumerable<(T, int)> WithIndex<T>(this IEnumerable<T> source) => source.Select((item, index) => (item, index));
+
+        public static string Join(this IEnumerable<string> source, string separator) => string.Join(separator, source);
     }
 }
