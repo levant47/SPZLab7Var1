@@ -30,13 +30,13 @@ namespace SPZLab7Var1
         private void UpdateSubjectsGrid()
         {
             subjectDataGridView.Rows.Clear();
-            SubjectsRepository.Subjects.ForEach(subject => subjectDataGridView.Rows.Add(subject.Name, subject.Faculty));
+            SubjectsRepository.GetAll().ForEach(subject => subjectDataGridView.Rows.Add(subject.Name, subject.Faculty));
         }
 
         private void teacherCreateButton_Click(object sender, EventArgs e) => new DetailedTeacherForm
         (
             null,
-            SubjectsRepository.Subjects,
+            SubjectsRepository.GetAll(),
             newTeacherVM =>
             {
                 var newTeacherId = TeachersRepository.Add(newTeacherVM.Teacher).Id;
@@ -62,7 +62,7 @@ namespace SPZLab7Var1
             new DetailedTeacherForm
             (
                 teacherVM,
-                SubjectsRepository.Subjects,
+                SubjectsRepository.GetAll(),
                 updatedTeacherVM =>
                 {
                     TeachersRepository.Update(updatedTeacherVM.Teacher);
@@ -110,7 +110,7 @@ namespace SPZLab7Var1
             {
                 return;
             }
-            var subject = SubjectsRepository.Subjects[(int)selectedRowIndex];
+            var subject = SubjectsRepository.GetAll()[(int)selectedRowIndex];
             var subjectVM = new SubjectVM
             {
                 Subject = subject,
@@ -137,7 +137,7 @@ namespace SPZLab7Var1
             {
                 return;
             }
-            SubjectsRepository.Delete(SubjectsRepository.Subjects[(int)selectedRowIndex].Id);
+            SubjectsRepository.Delete(SubjectsRepository.GetAll()[(int)selectedRowIndex].Id);
             UpdateSubjectsGrid();
         }
     }

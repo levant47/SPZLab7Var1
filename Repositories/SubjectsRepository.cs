@@ -1,30 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using SPZLab7Var1.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace SPZLab7Var1.Repositories
 {
     public class SubjectsRepository
     {
-        private static int _latestId = 3;
-        public static List<Subject> Subjects = new List<Subject>
+        public static List<Subject> GetAll()
         {
-            new Subject { Id = 1, Name = "Высшая Математика", Faculty = "Факультет Математики" },
-            new Subject { Id = 2, Name = "Физическая Культура", Faculty = "Факультет Физической Культуры" },
-            new Subject { Id = 3, Name = "Системное Програмное Обеспечение", Faculty = "Факультет Компьютерной Инженерии" },
-        };
+            using var sqlConnection = DatabaseUtility.GetSqlConnection();
+            SqlDataReader sqlDataReader = null;
+            try
+            {
+                sqlDataReader = new SqlCommand("SELECT * FROM Subject", sqlConnection).ExecuteReader();
+                return sqlDataReader.Cast<IDataRecord>()
+                    .Select(ConvertRecordToSubject)
+                    .ToList();
+            }
+            finally
+            {
+                sqlDataReader?.Close();
+            }
+        }
 
         public static Subject Add(Subject newSubject)
         {
-            _latestId += 1;
-            newSubject.Id = _latestId;
-            Subjects.Add(newSubject);
-            return newSubject;
+            return null;
         }
 
-        public static void Update(Subject newSubject) =>
-            Subjects = Subjects.Select(subject => subject.Id == newSubject.Id ? newSubject : subject).ToList();
+        public static void Update(Subject newSubject)
+        {
+        }
 
-        public static void Delete(int id) => Subjects = Subjects.Where(subject => subject.Id != id).ToList();
+        public static void Delete(int id)
+        {
+        }
+
+        private static Subject ConvertRecordToSubject(IDataRecord record)
+        {
+            var subject = new Subject();
+            foreach (var (propertyInfo, index) in typeof(Subject).GetProperties().WithIndex())
+            {
+                var dbValue = record[index];
+                propertyInfo.SetValue(subject, dbValue == DBNull.Value ? null : dbValue);
+            }
+            return subject;
+        }
     }
 }
 
