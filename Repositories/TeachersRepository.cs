@@ -36,10 +36,21 @@ namespace SPZLab7Var1.Repositories
 
         public static Teacher Add(Teacher newTeacher)
         {
-            _latestId += 1;
-            newTeacher.Id = _latestId;
-            Teachers.Add(newTeacher);
-            return newTeacher;
+            using var sqlConnection = DatabaseUtility.GetSqlConnection();
+            new SqlCommand($"INSERT INTO Teacher (Name, Age) VALUES ('{newTeacher.Name}', {newTeacher.Age})", sqlConnection)
+                .ExecuteNonQuery();
+            SqlDataReader sqlDataReader = null;
+            try
+            {
+                sqlDataReader = new SqlCommand("SELECT TOP 1 * FROM Teacher ORDER BY 1 DESC", sqlConnection).ExecuteReader();
+                return sqlDataReader.Cast<IDataRecord>()
+                    .Select(ConvertRecordToTeacher)
+                    .First();
+            }
+            finally
+            {
+                sqlDataReader?.Close();
+            }
         }
 
         public static void Update(Teacher newTeacher) =>
