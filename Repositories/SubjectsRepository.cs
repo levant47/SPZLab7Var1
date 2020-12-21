@@ -54,6 +54,8 @@ namespace SPZLab7Var1.Repositories
 
         public static void Delete(int id)
         {
+            using var sqlConnection = DatabaseUtility.GetSqlConnection();
+            new SqlCommand($"DELETE FROM Subject WHERE Id = {id}", sqlConnection).ExecuteNonQuery();
         }
 
         private static Subject ConvertRecordToSubject(IDataRecord record)
