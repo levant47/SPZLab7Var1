@@ -53,7 +53,7 @@ namespace SPZLab7Var1
             {
                 return;
             }
-            var teacher = TeachersRepository.Teachers[(int)selectedRowIndex];
+            var teacher = TeachersRepository.GetAll()[(int)selectedRowIndex];
             var teacherVM = new TeacherVM
             {
                 Teacher = teacher,
@@ -80,7 +80,7 @@ namespace SPZLab7Var1
             {
                 return;
             }
-            TeachersRepository.Delete(TeachersRepository.Teachers[(int)selectedRowIndex].Id);
+            TeachersRepository.Delete(TeachersRepository.GetAll()[(int)selectedRowIndex].Id);
             UpdateTeachersGrid();
         }
 
@@ -93,7 +93,7 @@ namespace SPZLab7Var1
         private void subjectCreateButton_Click(object sender, EventArgs e) => new DetailedSubjectForm
         (
             null,
-            TeachersRepository.Teachers,
+            TeachersRepository.GetAll(),
             newSubjectVM =>
             {
                 var newSubjectId = SubjectsRepository.Add(newSubjectVM.Subject).Id;
@@ -119,7 +119,7 @@ namespace SPZLab7Var1
             new DetailedSubjectForm
             (
                 subjectVM,
-                TeachersRepository.Teachers,
+                TeachersRepository.GetAll(),
                 updatedSubjectVM =>
                 {
                     SubjectsRepository.Update(updatedSubjectVM.Subject);
@@ -139,46 +139,6 @@ namespace SPZLab7Var1
             }
             SubjectsRepository.Delete(SubjectsRepository.Subjects[(int)selectedRowIndex].Id);
             UpdateSubjectsGrid();
-        }
-
-        private void exportButton_Click(object sender, EventArgs e)
-        {
-            var saveFileDialog = new SaveFileDialog
-            {
-                Filter = "JSON files (*.json)|*.json",
-                FilterIndex = 1,
-                RestoreDirectory = true,
-            };
-            if (saveFileDialog.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-            var fullData = new FullDataModel
-            {
-                Teachers = TeachersRepository.Teachers,
-                Subjects = SubjectsRepository.Subjects,
-                TeacherSubjects = TeacherSubjectRepository.TeacherSubjects,
-            };
-            File.WriteAllText(saveFileDialog.FileName, JsonConvert.SerializeObject(fullData));
-        }
-
-        private void importButton_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog
-            {
-                Filter = "JSON files (*.json)|*.json",
-                FilterIndex = 1,
-                RestoreDirectory = true,
-            };
-            if (openFileDialog.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-            var fullData = JsonConvert.DeserializeObject<FullDataModel>(File.ReadAllText(openFileDialog.FileName));
-            TeachersRepository.Teachers = fullData.Teachers;
-            SubjectsRepository.Subjects = fullData.Subjects;
-            TeacherSubjectRepository.TeacherSubjects = fullData.TeacherSubjects;
-            UpdateFullView();
         }
     }
 }

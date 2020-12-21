@@ -195,7 +195,6 @@
             this.exportButton.TabIndex = 10;
             this.exportButton.Text = "Экспорт";
             this.exportButton.UseVisualStyleBackColor = true;
-            this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
             // 
             // importButton
             // 
@@ -205,7 +204,6 @@
             this.importButton.TabIndex = 11;
             this.importButton.Text = "Импорт";
             this.importButton.UseVisualStyleBackColor = true;
-            this.importButton.Click += new System.EventHandler(this.importButton_Click);
             // 
             // MainForm
             // 

@@ -9,14 +9,6 @@ namespace SPZLab7Var1.Repositories
 {
     public static class TeachersRepository
     {
-        private static int _latestId = 3;
-        public static List<Teacher> Teachers = new List<Teacher>
-        {
-            new Teacher { Id = 1, Name = "Иван Иванов", Age = 20 },
-            new Teacher { Id = 2, Name = "Петр Петров", Age = 30 },
-            new Teacher { Id = 3, Name = "Василий Василев", Age = 40 },
-        };
-
         public static List<Teacher> GetAll()
         {
             using var sqlConnection = DatabaseUtility.GetSqlConnection();
@@ -53,10 +45,16 @@ namespace SPZLab7Var1.Repositories
             }
         }
 
-        public static void Update(Teacher newTeacher) =>
-            Teachers = Teachers.Select(teacher => teacher.Id == newTeacher.Id ? newTeacher : teacher).ToList();
+        public static void Update(Teacher newTeacher)
+        {
+            using var sqlConnection = DatabaseUtility.GetSqlConnection();
+            new SqlCommand($"UPDATE Teacher SET Name = '{newTeacher.Name}', Age = {newTeacher.Age} WHERE Id = {newTeacher.Id}", sqlConnection)
+                .ExecuteNonQuery();
+        }
 
-        public static void Delete(int id) => Teachers = Teachers.Where(teacher => teacher.Id != id).ToList();
+        public static void Delete(int id)
+        {
+        }
 
         private static Teacher ConvertRecordToTeacher(IDataRecord record)
         {
