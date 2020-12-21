@@ -28,7 +28,21 @@ namespace SPZLab7Var1.Repositories
 
         public static Subject Add(Subject newSubject)
         {
-            return null;
+            using var sqlConnection = DatabaseUtility.GetSqlConnection();
+            new SqlCommand($"INSERT INTO Subject (Name, Faculty) VALUES ('{newSubject.Name}', '{newSubject.Faculty}')", sqlConnection)
+                .ExecuteNonQuery();
+            SqlDataReader sqlDataReader = null;
+            try
+            {
+                sqlDataReader = new SqlCommand("SELECT TOP 1 * FROM Subject ORDER BY 1 DESC", sqlConnection).ExecuteReader();
+                return sqlDataReader.Cast<IDataRecord>()
+                    .Select(ConvertRecordToSubject)
+                    .First();
+            }
+            finally
+            {
+                sqlDataReader?.Close();
+            }
         }
 
         public static void Update(Subject newSubject)
