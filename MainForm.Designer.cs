@@ -42,8 +42,6 @@
             this.subjectCreateButton = new System.Windows.Forms.Button();
             this.subjectEditButton = new System.Windows.Forms.Button();
             this.subjectDeleteButton = new System.Windows.Forms.Button();
-            this.exportButton = new System.Windows.Forms.Button();
-            this.importButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.teachersDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -187,32 +185,12 @@
             this.subjectDeleteButton.UseVisualStyleBackColor = true;
             this.subjectDeleteButton.Click += new System.EventHandler(this.subjectDeleteButton_Click);
             // 
-            // exportButton
-            // 
-            this.exportButton.Location = new System.Drawing.Point(337, 9);
-            this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(75, 23);
-            this.exportButton.TabIndex = 10;
-            this.exportButton.Text = "Экспорт";
-            this.exportButton.UseVisualStyleBackColor = true;
-            // 
-            // importButton
-            // 
-            this.importButton.Location = new System.Drawing.Point(337, 37);
-            this.importButton.Name = "importButton";
-            this.importButton.Size = new System.Drawing.Size(75, 23);
-            this.importButton.TabIndex = 11;
-            this.importButton.Text = "Импорт";
-            this.importButton.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(744, 264);
-            this.Controls.Add(this.importButton);
-            this.Controls.Add(this.exportButton);
             this.Controls.Add(this.subjectDeleteButton);
             this.Controls.Add(this.subjectEditButton);
             this.Controls.Add(this.subjectCreateButton);
@@ -247,8 +225,6 @@
         private System.Windows.Forms.Button subjectCreateButton;
         private System.Windows.Forms.Button subjectEditButton;
         private System.Windows.Forms.Button subjectDeleteButton;
-        private System.Windows.Forms.Button exportButton;
-        private System.Windows.Forms.Button importButton;
     }
 }
 

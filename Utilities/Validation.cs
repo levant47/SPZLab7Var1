@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace SPZLab7Var1.Utilities
 {
@@ -28,15 +27,6 @@ namespace SPZLab7Var1.Utilities
                 return (null, "Не должно быть пустым");
             }
             return (source, null);
-        }
-
-        public static (string, string) SafeGetRequiredComboBoxOption(ComboBox source)
-        {
-            if (source.SelectedItem == null)
-            {
-                return (null, "Вы должны выбрать хотя бы одну опцию");
-            }
-            return (source.SelectedItem as string, null);
         }
 
         public static T AssertValidationPassed<T>(string fieldName, (T, string) valueErrorPair, List<(string, string)> errors)
