@@ -24,7 +24,7 @@ namespace SPZLab7Var1
         private void UpdateTeachersGrid()
         {
             teachersDataGridView.Rows.Clear();
-            TeachersRepository.Teachers.ForEach(teacher => teachersDataGridView.Rows.Add(teacher.Name, teacher.Age));
+            TeachersRepository.GetAll().ForEach(teacher => teachersDataGridView.Rows.Add(teacher.Name, teacher.Age));
         }
 
         private void UpdateSubjectsGrid()

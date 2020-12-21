@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SPZLab7Var1
+﻿namespace SPZLab7Var1
 {
     public class Teacher
     {

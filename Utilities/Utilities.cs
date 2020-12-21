@@ -31,5 +31,7 @@ namespace SPZLab7Var1.Utilities
         public static List<T> GetAllEnumValues<T>() => Enum.GetValues(typeof(T)).Cast<T>().ToList();
 
         public static T GetRandomElement<T>(this List<T> source) => source[new Random().Next(0, source.Count())];
+
+        public static IEnumerable<(T, int)> WithIndex<T>(this IEnumerable<T> source) => source.Select((item, index) => (item, index));
     }
 }
