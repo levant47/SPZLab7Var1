@@ -47,6 +47,9 @@ namespace SPZLab7Var1.Repositories
 
         public static void Update(Subject newSubject)
         {
+            using var sqlConnection = DatabaseUtility.GetSqlConnection();
+            new SqlCommand($"UPDATE Subject SET Name = '{newSubject.Name}', Faculty = '{newSubject.Faculty}' WHERE Id = {newSubject.Id}", sqlConnection)
+                .ExecuteNonQuery();
         }
 
         public static void Delete(int id)
